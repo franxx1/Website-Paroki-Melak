@@ -1,0 +1,36 @@
+/* main.css */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-merriweather: 'Merriweather', serif;
+  /* Atau untuk menjadikan default */
+  --font-sans: 'Merriweather', serif;
+
+  /* ColorHunt Palette */
+ --color-maroon-dark: #5D181E;    /* Merah Marun Markus (gelap) */
+  --color-gold-light: #fcef91;     /* Emas Cahaya (kuning pastel cerah) */
+  --color-ivory: #FFF9E6;          /* Putih Tulang (hangat) */
+  --color-brown-dark: #380E12; 
+  
+/* Base Colors */
+--color-maroon-dark: #5D181E;      /* Merah Marun Markus (gelap) */
+--color-gold-light: #fcef91;       /* Emas Cahaya (kuning pastel cerah) */
+--color-ivory: #FFF9E6;            /* Putih Tulang (hangat) */
+--color-brown-dark: #380E12;       /* Cokelat Gelap (footer & aksen) */
+
+/* Semantic Color Mapping */
+--color-background-light: var(--color-ivory);
+--color-background-dark: var(--color-maroon-dark);
+--color-text-light: var(--color-ivory);
+--color-text-dark: var(--color-brown-dark);
+--color-primary: var(--color-maroon-dark);
+--color-secondary: var(--color-brown-dark);
+--color-accent: var(--color-gold-light);
+
+/* Extended default colors */
+--color-primary: var(--color-maroon-dark);
+--color-secondary: var(--color-brown-dark);
+--color-accent: var(--color-gold-light);
+
+}

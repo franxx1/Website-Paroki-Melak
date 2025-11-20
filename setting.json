@@ -1,0 +1,16 @@
+{
+  "files.associations": {
+    "*.vue": "vue",
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "tailwindCSS.includeLanguages": {
+    "vue": "html",
+    "javascript": "javascript"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["class=\"([^\"]*)", "class='([^']*)", "class=\\s*\"([^\"]*)\"", "class=\\s*'([^']*)'"]
+  ]
+}
