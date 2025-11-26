@@ -35,7 +35,7 @@
         <!-- Desktop Menu -->
         <div class="hidden md:flex items-center px-10 space-x-8 text-xl">
           <a 
-            href="" 
+            href="/" 
             class="text-accent hover:text-accent transition-colors duration-300 font-medium"
           >
             Homepage
@@ -73,8 +73,8 @@
               <svg class="w-4 h-4 ml-1 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
             <div class="absolute left-0 mt-2 w-56 bg-red-dark rounded-md shadow-lg py-2 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-300 border border-yellow-pastel transform origin-top scale-95 group-hover:scale-100">
-              <a href="#berita" class="block px-4 py-2 text-sm text-accent hover:bg-yellow-pastel hover:text-red-dark transition-colors">Berita</a>
-              <a href="#pengumuman" class="block px-4 py-2 text-sm text-accent hover:bg-yellow-pastel hover:text-red-dark transition-colors">Pengumuman</a>
+              <a href="/berita" class="block px-4 py-2 text-sm text-accent hover:bg-yellow-pastel hover:text-red-dark transition-colors">Berita</a>
+              <a href="/pengumuman" class="block px-4 py-2 text-sm text-accent hover:bg-yellow-pastel hover:text-red-dark transition-colors">Pengumuman</a>
             </div>
           </div>
           <a 
