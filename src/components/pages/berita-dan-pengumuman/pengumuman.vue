@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { client } from "../../prismic";
+import { client } from "../../../prismic";
 
 const pengumuman = ref([]);
 const loading = ref(true);

@@ -1,10 +1,10 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../components/home.vue";
-import Berita from "../components/pages/berita.vue";
-import Pengumuman from "../components/pages/pengumuman.vue";
-import PengumumanDetail from "../components/pages/pengumuman_detail.vue";
-import BeritaDetail from "../components/pages/berita_detail.vue";
+import Berita from "../components/pages/berita-dan-pengumuman/berita.vue";
+import Pengumuman from "../components/pages/berita-dan-pengumuman/pengumuman.vue";
+import PengumumanDetail from "../components/pages/berita-dan-pengumuman/pengumuman_detail.vue";
+import BeritaDetail from "../components/pages/berita-dan-pengumuman/berita_detail.vue";
 
 const routes = [
   {

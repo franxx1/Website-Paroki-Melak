@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { client } from "../../prismic";
+import { client } from "../../../prismic";
 import { asHTML } from "@prismicio/client";
 
 
