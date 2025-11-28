@@ -1,36 +1,52 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../components/home.vue";
-import Berita from "../components/pages/berita-dan-pengumuman/berita.vue";
-import Pengumuman from "../components/pages/berita-dan-pengumuman/pengumuman.vue";
-import PengumumanDetail from "../components/pages/berita-dan-pengumuman/pengumuman_detail.vue";
-import BeritaDetail from "../components/pages/berita-dan-pengumuman/berita_detail.vue";
+
+// Lazy Loading Pages
+const Home = () => import("../components/home.vue");
+const Berita = () => import("../components/pages/berita-dan-pengumuman/berita.vue");
+const BeritaDetail = () => import("../components/pages/berita-dan-pengumuman/berita_detail.vue");
+
+const Pengumuman = () => import("../components/pages/berita-dan-pengumuman/pengumuman.vue");
+const PengumumanDetail = () => import("../components/pages/berita-dan-pengumuman/pengumuman_detail.vue");
+
+const Sakramen = () => import("../components/pages/sakramen/sakramen.vue");
+const SakramenDetail = () => import("../components/pages/sakramen/sakramen_detail.vue");
 
 const routes = [
   {
     path: "/",
-    name: "Home",
+    name: "home",
     component: Home,
   },
-    {
+  {
     path: "/berita",
-    name: "Berita",
+    name: "berita",
     component: Berita,
   },
   {
+    path: "/berita/:uid",
+    name: "beritaDetail",
+    component: BeritaDetail,
+  },
+  {
     path: "/pengumuman",
-    name: "Pengumuman",
+    name: "pengumuman",
     component: Pengumuman,
   },
   {
     path: "/pengumuman/:uid",
-    name: "PengumumanDetail",
+    name: "pengumumanDetail",
     component: PengumumanDetail,
   },
   {
-    path: "/berita/:uid",
-    name: "BeritaDetail",
-    component: BeritaDetail,
+    path: "/sakramen",
+    name: "sakramen",
+    component: Sakramen,
+  },
+  {
+    path: "/sakramen/:uid",
+    name: "sakramenDetail",
+    component: SakramenDetail,
   },
 ];
 
