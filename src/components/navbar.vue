@@ -4,14 +4,17 @@
       <div class="flex items-center justify-between h-18">
         <!-- Brand Logo -->
         <div class="flex items-center space-x-3">
-          <img 
+          <a href="/">
+            <img
             src="/src/assets/logo/logo.png" 
             alt="Paroki Santo Markus Melak"
             class="w-20 h-20 object-contain"
-          >
+            href="/"
+          ></a>
           <span class="text-accent text-xl font-bold whitespace-nowrap"> 
           </span>
         </div>
+        
 
         <!-- Mobile Menu Button -->
         <button
@@ -42,7 +45,7 @@
           </a>
           <a 
         
-            href="#pelayanan"  
+            href="/pelayanan"  
             class="text-accent hover:text-bright-sun transition-colors duration-300 font-medium"
           >
             Pelayanan
@@ -54,14 +57,14 @@
               <svg class="w-4 h-4 ml-1 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
             <div class="absolute left-0 mt-2 w-48 bg-red-dark rounded-md shadow-lg py-2 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-300 border border-yellow-pastel transform origin-top scale-95 group-hover:scale-100">
-              <a href="#dpp" class="block px-4 py-2 text-sm text-accent hover:bg-yellow-pastel hover:text-red-dark transition-colors">DPP</a>
-              <a href="#sejarah" class="block px-4 py-2 text-sm text-accent hover:bg-yellow-pastel hover:text-red-dark transition-colors">Sejarah</a>
-              <a href="#wilayah" class="block px-4 py-2 text-sm text-accent hover:bg-yellow-pastel hover:text-red-dark transition-colors">Wilayah Pelayanan</a>
+              <a href="/dpp" class="block px-4 py-2 text-sm text-accent hover:bg-yellow-pastel hover:text-red-dark transition-colors">DPP</a>
+              <a href="/sejarah" class="block px-4 py-2 text-sm text-accent hover:bg-yellow-pastel hover:text-red-dark transition-colors">Sejarah</a>
+              <a href="/pastor" class="block px-4 py-2 text-sm text-accent hover:bg-yellow-pastel hover:text-red-dark transition-colors">Wilayah Pelayanan</a>
               <a href="#fasilitas" class="block px-4 py-2 text-sm text-accent hover:bg-yellow-pastel hover:text-red-dark transition-colors">Fasilitas</a>
             </div>
           </div>
           <a 
-            href="#jadwalmisa" 
+            href="/jadwal-misa" 
             class="text-accent hover:text-bright-sun transition-colors duration-300 font-medium"
           >
             Jadwal Misa
