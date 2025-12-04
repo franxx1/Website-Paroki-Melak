@@ -1,10 +1,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { client } from "../../../prismic";
+import { useBeritaStore } from "/src/store/berita";
 
 const route = useRoute();
-const berita = ref(null);
+const beritaStore = useBeritaStore();
+
+
 const loading = ref(true);
 const error = ref(false);
 
@@ -12,8 +14,8 @@ onMounted(async () => {
   try {
     const uid = route.params.uid;
 
-    const doc = await client.getByUID("beritapost", uid);
-    berita.value = doc;
+    const doc = await beritaStore.fetchBeritaDetail(uid);
+    beritaStore.berita = doc;
   } catch (err) {
     console.error("Gagal mengambil detail berita:", err);
     error.value = true;
@@ -23,9 +25,10 @@ onMounted(async () => {
 });
 </script>
 
+
 <template>
-  <section class="container mx-auto px-4 pt-32 pb-10">
-    <!-- Loading -->
+  <section class="container mx-auto px-4 pt-10 pb-10">
+    <!-- Loading -->        
     <div v-if="loading" class="text-center text-gray-600">
       Loading...
     </div>
@@ -36,28 +39,28 @@ onMounted(async () => {
     </div>
 
     <!-- Konten Berita -->
-    <div v-else class="max-w-3xl mx-auto">
+    <div v-else-if="beritaStore.berita" class="max-w-3xl mx-auto">
       <!-- Judul -->
       <h1 class="text-3xl font-bold text-[#5D181E] mb-4">
-        {{ berita.data.judul_berita[0].text }}
+        {{ beritaStore.berita.judul_berita[0].text }}
       </h1>
 
       <!-- Tanggal -->
       <p class="text-gray-500 mb-6">
-        {{ new Date(berita.data.tanggal_rilis_berita).toLocaleDateString("id-ID") }}
+        {{ beritaStore.berita.tanggal_rilis_berita }}
       </p>
 
       <!-- Foto -->
       <img
-        v-if="berita.data['gambar_berita']?.url"
-        :src="berita.data['gambar_berita'].url"
+        v-if="beritaStore.berita.gambar_berita"
+        :src="beritaStore.berita.gambar_berita.url"
         class="w-full rounded-lg mb-6 shadow"
         alt="Foto Berita"
       />
 
       <!-- Isi Berita -->
       <p class="text-[#5D181E]/80 text-sm mb-4 flex-grow whitespace-pre-line">
-        {{ berita.data["isi_berita"].map(block => block.text).join("\n\n") }}
+        {{ beritaStore.berita.isi_berita[0].text }}
       </p>
 
       <!-- Tombol Kembali -->

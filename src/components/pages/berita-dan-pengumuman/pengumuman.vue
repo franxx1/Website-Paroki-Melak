@@ -1,22 +1,12 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import { client } from "../../../prismic";
+import {usePengumumanStore } from "/src/store/pengumuman";
+import { onMounted } from "vue";
 
-const pengumuman = ref([]);
-const loading = ref(true);
 
-onMounted(async () => {
-  const response = await client.get({
-    type: "pengumumanpost",
-    pageSize: 100,
-    orderings: {
-      field: "my.pengumumanpost.tanggal_rilis_pengumuman",
-      direction: "desc",
-    },
-  });
+const pengumumanStore = usePengumumanStore();
 
-  pengumuman.value = response.results.filter(item => item.data?.judul_pengumuman?.[0]?.text);
-  loading.value = false;
+onMounted(() => {
+  pengumumanStore.fetchPengumuman();
 });
 </script>
 
@@ -41,17 +31,17 @@ onMounted(async () => {
           </h1>
         </div>
 
-        <div v-if="loading" class="text-center p-10 text-[#5D181E]">
+        <div v-if="pengumumanStore.loading" class="text-center p-10 text-[#5D181E]">
           Loading...
         </div>
 
         <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <RouterLink v-for="(item, index) in pengumuman" :key="index" :to="`/pengumuman/${item.uid}`"
+          <RouterLink v-for="(item, index) in pengumumanStore.items" :key="index" :to="`/pengumuman/${item.uid}`"
             class="bg-[#FFF9E6] border border-[#5D181E]/10 rounded-xl p-6 hover:bg-[#fcef91] transition-all duration-300 shadow-sm hover:shadow-md group cursor-pointer block">
             <div class="flex justify-between items-start mb-4">
               <span
                 class="text-xs font-bold text-[#5D181E]/60 uppercase tracking-wider border border-[#5D181E]/20 px-2 py-1 rounded">
-                {{ item.data?.tanggal_rilis_pengumuman || "Info" }}
+                {{ item.data.tanggal_rilis_pengumuman || "Info" }}
               </span>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-5 h-5 text-[#5D181E] opacity-50 group-hover:opacity-100">
@@ -61,17 +51,17 @@ onMounted(async () => {
             </div>
 
             <h3 class="text-lg font-serif text-[#5D181E] font-bold mb-2 leading-snug">
-              {{ item.data?.judul_pengumuman?.[0]?.text }}
+              {{ item.data.judul_pengumuman?.[0]?.text }}
             </h3>
             <p class="text-[#5D181E]/80 text-sm line-clamp-4 mb-4">
-              {{ item.data?.["isi-pengumuman"]?.[0]?.text }}
+              {{ item.data.isi_pengumuman?.[0]?.text }}
             </p>
 
             <!-- Download/View Link if available -->
-            <div v-if="item.data?.['upload-pengumuman']?.url"
+            <div v-if="item.data?.upload_pengumuman?.url"
               class="inline-flex items-center text-xs font-bold text-[#5D181E] uppercase tracking-wide hover:underline mt-2"
               @click.stop>
-              <a :href="item.data['upload-pengumuman'].url" target="_blank" class="flex items-center">
+              <a :href="item.data.upload_pengumuman.url" target="_blank" class="flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                   stroke="currentColor" class="w-4 h-4 mr-1">
                   <path stroke-linecap="round" stroke-linejoin="round"

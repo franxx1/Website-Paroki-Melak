@@ -1,21 +1,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { client } from "../../../prismic";
+import { useBeritaStore } from "/src/store/berita";
 
-const berita = ref([]);
-const loading = ref(true);
+const beritaStore = useBeritaStore();
 
-onMounted(async () => {
-  const beritaRes = await client.getByType("beritapost", {
-    orderings: [
-      { field: "my.beritapost.tanggal_rilis_berita", direction: "desc" }
-    ],
-  });
-
-  berita.value = beritaRes.results;
-
-
-  loading.value = false;
+onMounted(() => {
+  beritaStore.fetchBerita();
 });
 
 </script>
@@ -42,7 +32,7 @@ onMounted(async () => {
           </h1>
         </div>
 
-        <div v-if="loading" class="text-center p-10 text-[#5D181E]">
+        <div v-if="beritaStore.loading" class="text-center p-10 text-[#5D181E]">
           Loading...
         </div>
 
@@ -64,7 +54,7 @@ onMounted(async () => {
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <div v-for="(item, index) in berita" :key="index"
+              <div v-for="(item, index) in beritaStore.items" :key="index"
                 class="bg-white/40 backdrop-blur-md border border-white/50 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
                 <!-- Image Placeholder if no image -->
                 <div class="h-48 bg-[#5D181E]/10 relative overflow-hidden">
@@ -82,7 +72,7 @@ onMounted(async () => {
                 <div class="p-6 flex flex-col flex-grow">
                   <span class="text-xs font-bold text-[#5D181E]/60 uppercase tracking-wider mb-2">
                     {{
-                      item.data?.tanggal_rilis_berita ||
+                      item.data.tanggal_rilis_berita ||
                       "Tanggal tidak tersedia"
                     }}
                   </span>
