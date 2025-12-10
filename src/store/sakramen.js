@@ -3,7 +3,8 @@ import { client } from "../prismic";
 
 export const useSakramenStore = defineStore("sakramen", {
     state: () => ({
-        items: [],
+        sakramenItems: [],
+        sakramenDetail: null,
         loading: false,
         error: null,
     }),
@@ -13,18 +14,24 @@ export const useSakramenStore = defineStore("sakramen", {
             this.error = null;
 
             try {
-                const sakramenRes = await client.getByType("sakramenpost", {
-                    orderings: [
-                        {
-                            field: "my.sakramenpost.tanggal_rilis_sakramen",
-                            direction: "desc",
-                        },
-                    ],
-                });
-
-        
+                const sakramenRes = await client.getByType("sakramen");
+                this.sakramenItems = sakramenRes.results;
             } catch (err) {
                 this.error = err.message;
+            } finally {
+                this.loading = false;
+            }
+        },
+        async fetchSakramenDetail(uid) {
+            this.loading = true;
+            this.error = null;
+
+            try {
+                const doc = await client.getByUID("sakramen", uid);
+                this.sakramenDetail = doc;
+            } catch (err) {
+                this.error = err.message;
+                throw err;
             } finally {
                 this.loading = false;
             }

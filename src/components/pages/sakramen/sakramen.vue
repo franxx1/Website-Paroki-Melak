@@ -1,23 +1,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { client } from "../../../prismic";
-import { RouterLink } from "vue-router";
+import { useSakramenStore } from "/src/store/sakramen";
 
-const sakramenList = ref([]);
-const loading = ref(true);
+const sakramenStore = useSakramenStore();
 
 onMounted(async () => {
-    try {
-        const response = await client.get({
-            type: "sakramen"
-        });
-        // Filter out items that don't have a title/name
-        sakramenList.value = response.results.filter(item => item.data?.nama_sakramen?.[0]?.text);
-    } catch (error) {
-        console.error("Error fetching sakramen:", error);
-    } finally {
-        loading.value = false;
-    }
+    sakramenStore.fetchSakramen();
 });
 </script>
 
@@ -51,12 +39,12 @@ onMounted(async () => {
                     Loading...
                 </div>
 
-                <div v-else-if="sakramenList.length === 0" class="text-center p-10 text-[#5D181E] italic">
-                    Belum ada data sakramen.
+                <div v-else-if="sakramenStore.sakramenItems.length === 0" class="text-center p-10 text-[#5D181E] italic">
+                    Sedang Mengambil Data...
                 </div>
 
                 <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div v-for="item in sakramenList" :key="item.uid"
+                    <div v-for="item in sakramenStore.sakramenItems" :key="item.uid"
                         class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group flex flex-col h-full border border-[#5D181E]/5">
                         <!-- Image -->
                         <div class="h-56 bg-[#5D181E]/10 relative overflow-hidden">
@@ -76,7 +64,7 @@ onMounted(async () => {
                             <!-- Number/Index (Optional, purely decorative based on target site) -->
                             <div
                                 class="absolute -top-8 right-6 w-12 h-12 bg-[#5D181E] text-[#FFF9E6] rounded-full flex items-center justify-center font-serif text-xl font-bold shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                {{ sakramenList.indexOf(item) + 1 }}
+                                {{ sakramenStore.sakramenItems.indexOf(item) + 1 }}
                             </div>
 
                             <h3
