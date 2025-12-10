@@ -12,6 +12,8 @@ const PengumumanDetail = () => import("../components/pages/berita-dan-pengumuman
 const Sakramen = () => import("../components/pages/sakramen/sakramen.vue");
 const SakramenDetail = () => import("../components/pages/sakramen/sakramen_detail.vue");
 
+
+
 const routes = [
   {
     path: "/",
@@ -48,6 +50,7 @@ const routes = [
     name: "sakramenDetail",
     component: SakramenDetail,
   },
+
 ];
 
 export const router = createRouter({
