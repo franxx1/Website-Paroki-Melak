@@ -22,8 +22,7 @@ const Pastor = () => import("../components/pages/paroki/pastor.vue");
 const Jadwal_Misa = () => import("../components/jadwalMisa.vue");
 const Pelayanan = () => import("../components/pelayanan.vue");
 const Galeri = () => import("../components/pages/galeri/galeri.vue");
-const GaleriDetail = () =>
-  import("../components/pages/galeri/galeri_detail.vue");
+const GaleriDetail = () =>import("../components/pages/galeri/galeri_detail.vue");
 
 const routes = [
   {
