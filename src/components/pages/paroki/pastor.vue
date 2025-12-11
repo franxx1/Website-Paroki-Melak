@@ -1,20 +1,13 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { client } from "../../../prismic";
 
-const pastor = ref([]);
-const loading = ref(true);
+import { useParokiStore } from "/src/store/paroki";
+
+const pastorStore = useParokiStore();
+
 
 onMounted(async () => {
-    try {
-        const pastorRes = await client.getByType("pastor");
-        pastor.value = pastorRes.results;
-        console.log("HASIL PASTOR:", pastor.value);
-    } catch (error) {
-        console.error("Error fetching pastor:", error);
-    } finally {
-        loading.value = false;
-    }
+    pastorStore.fetchPastor();
 });
 </script>
 
@@ -33,7 +26,7 @@ onMounted(async () => {
                     </h1>
                 </div>
 
-                <div v-if="loading" class="text-center p-10 text-[#5D181E]">
+                <div v-if="pastorStore.loading" class="text-center p-10 text-[#5D181E]">
                     <div class="animate-pulse flex flex-col items-center">
                         <div class="h-8 w-64 bg-[#5D181E]/20 rounded mb-4"></div>
                         <div class="h-4 w-48 bg-[#5D181E]/20 rounded"></div>
@@ -41,7 +34,7 @@ onMounted(async () => {
                 </div>
 
                 <div v-else class="flex flex-wrap justify-center gap-8 mx-4 md:mx-10">
-                    <div v-for="(item, index) in pastor" :key="index"
+                    <div v-for="(item, index) in pastorStore.pastorItems" :key="index"
                         class="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-2rem)] max-w-sm bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-[#5D181E]/10 group hover:-translate-y-2">
 
                         <!-- Image Container -->

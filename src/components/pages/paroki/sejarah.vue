@@ -1,21 +1,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { client } from "../../../prismic";
+import { useParokiStore } from "/src/store/paroki";
 
-const sejarah = ref(null);
-const loading = ref(true);
-const error = ref(false);
+const sejarahStore = useParokiStore();
 
 
 onMounted(async () => {
-    try {
-        const sejarahRes = await client.getByType("sejarahpost");
-        sejarah.value = sejarahRes.results[0];
-    } catch (error) {
-        console.error("Error fetching sejarah:", error);
-    } finally {
-        loading.value = false;
-    }
+    sejarahStore.fetchSejarah();
 });
 </script>
 
@@ -23,7 +14,7 @@ onMounted(async () => {
     <section class="container mx-auto px-4 pt-32 pb-10">
         <!-- Loading -->
         <!-- Loading Skeleton -->
-        <div v-if="loading" class="max-w-3xl mx-auto animate-pulse">
+        <div v-if="sejarahStore.loading" class="max-w-3xl mx-auto animate-pulse">
             <!-- Image Skeleton -->
             <div class="w-full h-64 bg-gray-300 rounded-lg mb-6"></div>
 
@@ -43,16 +34,16 @@ onMounted(async () => {
         <!-- Konten Berita -->
         <div v-else class="max-w-3xl mx-auto">
             <!-- Judul -->
-            <img v-if="sejarah?.data?.gambar_gereja?.url" :src="sejarah.data.gambar_gereja.url"
+            <img v-if="sejarahStore.sejarahData?.data.gambar_gereja?.url" :src="sejarahStore.sejarahData?.data.gambar_gereja.url"
                 class="w-full rounded-lg mb-6 shadow" alt="Foto Berita" />
             <h1 class="text-3xl font-bold text-[#5D181E] mb-4">
-                {{ sejarah.data?.judul?.[0]?.text }}
+                {{ sejarahStore.sejarahData?.data?.judul?.[0]?.text }}
             </h1>
 
 
             <!-- Isi Berita -->
             <p class="text-[#5D181E]/80 text-sm mb-4 flex-grow whitespace-pre-line">
-                {{sejarah.data?.isi_sejarah?.map(block => block.text).join("\n\n")}}
+                {{sejarahStore.sejarahData?.data?.isi_sejarah?.map(block => block.text).join("\n\n")}}
             </p>
 
             <!-- Tombol Kembali -->

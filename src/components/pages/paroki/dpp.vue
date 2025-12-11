@@ -1,27 +1,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { client } from "../../../prismic";
+import { useParokiStore } from "/src/store/paroki";
 
-const dppData = ref(null);
-const loading = ref(true);
-const error = ref(false);
+const dppStore = useParokiStore();
 
 onMounted(async () => {
-    try {
-        // Fetch the single 'dpp' document
-        const response = await client.getByType("dpppost");
-        if (response.results.length > 0) {
-            dppData.value = response.results[0].data;
-            console.log("DPP Data:", dppData.value);
-        } else {
-            console.warn("No DPP document found.");
-        }
-    } catch (err) {
-        console.error("Error fetching DPP:", err);
-        error.value = true;
-    } finally {
-        loading.value = false;
-    }
+   dppStore.fetchDpp();
 });
 </script>
 
@@ -40,18 +24,18 @@ onMounted(async () => {
                     Paroki St.Markus Melak
                 </span>
 
-                <h1 v-if="dppData?.judul_pengurus"
+                <h1 v-if="dppStore.dppData?.judul_pengurus"
                     class="text-3xl md:text-5xl font-serif text-[#5D181E] mb-4 font-bold">
-                    {{ dppData.judul_pengurus }}
+                    {{ dppStore.dppData.judul_pengurus }}
                 </h1>
                 <h1 v-else class="text-3xl md:text-5xl font-serif text-[#5D181E] mb-4 font-bold">
                     Dewan Pastoral Paroki<br></br> St.Markus Melak
                 </h1>
 
-                <div v-if="dppData?.periode"
+                <div v-if="dppStore.dppData?.periode"
                     class="inline-block bg-[#5D181E]/10 px-6 py-2 rounded-full border border-[#5D181E]/20">
                     <span class="text-[#5D181E] font-serif italic text-lg">
-                        Periode {{ dppData.periode }}
+                        Periode {{ dppStore.dppData.periode }}
                     </span>
                 </div>
             </div>
@@ -62,7 +46,7 @@ onMounted(async () => {
             <div class="container mx-auto max-w-5xl">
 
                 <!-- Loading Skeleton -->
-                <div v-if="loading" class="animate-pulse">
+                <div v-if="dppStore.loading" class="animate-pulse">
                     <div class="bg-gray-200 rounded-2xl shadow-xl overflow-hidden border border-gray-300">
                         <!-- Table Header Skeleton -->
                         <div class="bg-gray-300 h-16 w-full"></div>
@@ -79,12 +63,12 @@ onMounted(async () => {
                 </div>
 
                 <!-- Error State -->
-                <div v-else-if="error" class="text-center p-10 text-red-600 bg-red-50 rounded-xl border border-red-100">
+                <div v-else-if="dppStore.error" class="text-center p-10 text-red-600 bg-red-50 rounded-xl border border-red-100">
                     <p>Maaf, terjadi kesalahan saat memuat data.</p>
                 </div>
 
                 <!-- Empty State -->
-                <div v-else-if="!dppData"
+                <div v-else-if="dppStore.dppItems.length === 0"
                     class="text-center p-10 text-[#5D181E]/60 italic bg-white rounded-xl shadow-sm">
                     Belum ada data pengurus yang tersedia.
                 </div>
@@ -102,7 +86,7 @@ onMounted(async () => {
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-[#5D181E]/10">
-                                <tr v-for="(member, index) in dppData.tabel_pengurus" :key="index"
+                                <tr v-for="(item,index) in dppStore.dppItems" :key="index"
                                     class="hover:bg-[#FFF9E6]/30 transition-colors duration-150 group">
                                     <td class="py-4 px-6 text-center text-[#5D181E]/60 font-mono text-sm">
                                         {{ index + 1 }}
@@ -110,13 +94,13 @@ onMounted(async () => {
                                     <td class="py-4 px-6">
                                         <div
                                             class="font-bold text-[#5D181E] text-lg group-hover:text-[#b8860b] transition-colors">
-                                            {{ member.nama }}
+                                            {{ item.nama}}
                                         </div>
                                     </td>
                                     <td class="py-4 px-6">
                                         <div
                                             class="inline-flex items-center px-3 py-1 rounded-full bg-[#5D181E]/5 text-[#5D181E] text-sm font-medium border border-[#5D181E]/10">
-                                            {{ member.jabatan }}
+                                            {{ item.jabatan }}
                                         </div>
                                     </td>
                                     <!-- <td class="py-4 px-6 text-[#5D181E]/80 font-medium">
@@ -127,7 +111,7 @@ onMounted(async () => {
                                                     d="M2 3.5A1.5 1.5 0 013.5 2h1.148a1.5 1.5 0 011.465 1.175l.716 3.223a1.5 1.5 0 01-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 006.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 011.767-1.052l3.223.716A1.5 1.5 0 0118 15.352V16.5a1.5 1.5 0 01-1.5 1.5H15c-1.149 0-2.263-.15-3.326-.43A13.022 13.022 0 012.43 8.326 13.019 13.019 0 012 5V3.5z"
                                                     clip-rule="evenodd" />
                                             </svg>
-                                            {{ member.kontak }}
+                                            {{ item.kontak }}
                                         </div>
                                         <span v-else class="text-gray-300 text-sm italic">-</span>
                                     </td> -->
